@@ -1,2 +1,0 @@
-# servos
-iniciacion a servomotores
