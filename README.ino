@@ -1,12 +1,6 @@
 # servos
 iniciacion a servomotores
 
-#include <Servo.h>
-
-#include <Servo.h>
-
-#include <Servo.h>
-
 /***
 Proba
 
