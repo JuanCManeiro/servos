@@ -34,3 +34,75 @@ Tarefa a realizar:
           Pantallazo da montaxe,
           A URL da túa simulación, 
           A URL do código subido a GitHub.
+            
+            
+            /*
+ 
+ */
+
+#include <Servo.h>
+
+//Pin de control do servo
+#define CTRL 3
+
+//Pin de lectura do potenc
+#define POT A5
+
+//Declaramos o obxecto motor
+//da clase Servo
+Servo motor;
+int angulo = 10;
+int veloc = 3000; // Tempo que tarda en facer o loop e redirixir o servo a nova posicion
+
+String orde = "";
+
+void setup() {
+  motor.attach(CTRL);
+  Serial.begin(9600);
+}
+
+void loop(){
+
+if(Serial.available()){
+  orde = Serial.readStringUntil('\n');                     // a \/ para un lado ou para o outro fai que as ordes de movemento do servo vaian
+  if(orde.equals("esquerda")){angulo = 180; }              // polo lado do movemento que ten ou polo lado contrario, por eso se lle decimos 
+  else if(orde.equals("Desquerda")){angulo = 135;} // que "centro" vai para un extremo, porque tenta ir ao centro 
+  else if(orde.equals("centro")){angulo = 90;}             // do lado contrario e o servo so se move en 180º
+  else if(orde.equals("Ddereita")){angulo = 45;}
+  else if(orde.equals("dereita")){angulo = 0;}
+  else{
+  int temp = orde.toInt();
+    if(temp >= 0 && temp <= 180) angulo = temp;
+    else angulo = 0;
+    
+  }
+    
+ 
+}
+  else{
+    // Lectura do potenciometro
+    angulo = analogRead(POT);
+    angulo = map(angulo, 0, 1023, 0, 180);
+  
+  
+
+}
+  //Actualiza servo
+  motor.write(angulo);
+  delay(veloc);
+  Serial.println(angulo); 
+  //delay(lectura);
+  
+  
+}
+
+/*/void loop() {
+  //Lectura do potenciometro
+  angulo = analogRead(POT);
+  angulo = map(angulo, 0, 1023, 0, 180);
+  //Actualiza servo
+  motor.write(angulo);
+  delay(veloc);
+}
+
+**/
